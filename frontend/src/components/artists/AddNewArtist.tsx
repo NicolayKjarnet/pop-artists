@@ -1,14 +1,16 @@
-import { useState, useContext, ChangeEvent } from "react";
-import { ArtistContext } from "../../contexts/ArtistContext";
+import { useState, ChangeEvent, FC } from "react";
 import { ArtistType } from "../../types/Artist";
-import { ArtistContextType } from "../../types/ArtistContext";
 import ImageUploadService from "../../services/UploadImageService";
 
-const AddNewArtist = () => {
-  const { addArtist } = useContext(ArtistContext) as ArtistContextType;
+interface AddNewArtistProps {
+  onSave: (artist: ArtistType) => void;
+  clearSelectedArtist: () => void;
+}
 
-  const [image, setImage] = useState<File | null>(null);
-
+const AddNewArtist: FC<AddNewArtistProps> = ({
+  onSave,
+  clearSelectedArtist,
+}) => {
   const [newArtist, setNewArtist] = useState<ArtistType>({
     id: 0,
     artistName: "",
@@ -18,6 +20,8 @@ const AddNewArtist = () => {
     albums: [],
   });
 
+  const [image, setImage] = useState<File | null>(null);
+
   const artistObjecthandler = (e: { target: { name: any; value: any } }) => {
     const { name, value } = e.target;
     setNewArtist({ ...newArtist, [name]: value });
@@ -25,10 +29,8 @@ const AddNewArtist = () => {
 
   const imageHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
-
     if (files != null && files.length > 0) {
       const file = files[0];
-
       if (file.size < 2_000_000) {
         setImage(file);
         setNewArtist({ ...newArtist, image: file.name });
@@ -42,11 +44,9 @@ const AddNewArtist = () => {
     if (newArtist != null && image != null) {
       try {
         await Promise.all([
-          addArtist(newArtist),
           ImageUploadService.uploadImage(image),
+          onSave(newArtist),
         ]);
-        alert("New artist was successfully added to the database.");
-        window.location.reload();
       } catch {
         alert("Error adding artist.");
       }
@@ -54,57 +54,73 @@ const AddNewArtist = () => {
   };
 
   return (
-    <section className="margin">
-      <h2>Add New Artist</h2>
-
-      <div className="form-group">
-        <label className="form-label">Artist name</label>
-        <input
-          className="form-control"
-          name="artistName"
-          onChange={artistObjecthandler}
-          type="text"
-        />
+    <div className="modal-content">
+      <div className="modal-header">
+        <h5 className="modal-title">Add New Artist</h5>
+        <button
+          type="button"
+          className="close"
+          onClick={clearSelectedArtist}
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
-
-      <div className="form-group">
-        <label className="form-label">Genre</label>
-        <input
-          className="form-control"
-          name="genre"
-          onChange={artistObjecthandler}
-          type="text"
-        />
-      </div>
-
-      <div className="form-group">
-        <label className="form-label">Description</label>
-        <input
-          className="form-control"
-          name="description"
-          onChange={artistObjecthandler}
-          type="text"
-        />
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="artistImage" className="form-label mt-3">
-          Choose an image:
-        </label>
-        <div className="custom-file">
+      <div className="modal-body">
+        <div className="form-group">
+          <label className="form-label">Artist name</label>
           <input
-            type="file"
-            className="form-control-file"
-            id="artistImage"
-            onChange={imageHandler}
+            className="form-control"
+            name="artistName"
+            onChange={artistObjecthandler}
+            type="text"
           />
         </div>
+        <div className="form-group">
+          <label className="form-label">Genre</label>
+          <input
+            className="form-control"
+            name="genre"
+            onChange={artistObjecthandler}
+            type="text"
+          />
+        </div>
+        <div className="form-group">
+          <label className="form-label">Description</label>
+          <input
+            className="form-control"
+            name="description"
+            onChange={artistObjecthandler}
+            type="text"
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="artistImage" className="form-label mt-3">
+            Choose an image:
+          </label>
+          <div className="custom-file">
+            <input
+              type="file"
+              className="form-control-file"
+              id="artistImage"
+              onChange={imageHandler}
+            />
+          </div>
+        </div>
       </div>
-
-      <button className="btn btn-primary mt-3" onClick={addNewArtistHandler}>
-        Add
-      </button>
-    </section>
+      <div className="modal-footer">
+        <button className="btn btn-primary mt-3" onClick={addNewArtistHandler}>
+          Add
+        </button>
+        <button
+          type="button"
+          className="btn btn-secondary mt-3"
+          onClick={clearSelectedArtist}
+        >
+          Close
+        </button>
+      </div>
+    </div>
   );
 };
 

@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Link } from "react-router-dom";
 
-type ButtonType = "seeMore" | "delete" | "update" | "none";
+type ButtonType = "seeMore" | "delete" | "update" | "add" | "none";
 
 type CRUDButtonProps = {
   id: number;

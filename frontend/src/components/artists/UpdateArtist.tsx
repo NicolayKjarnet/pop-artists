@@ -1,30 +1,43 @@
-import { useState, useContext, ChangeEvent } from "react";
-import { ArtistContext } from "../../contexts/ArtistContext";
+import { useState, useEffect, ChangeEvent, FC } from "react";
 import { ArtistType } from "../../types/Artist";
-import { ArtistContextType } from "../../types/ArtistContext";
-import ImageUploadService from "../../services/UploadImageService";
-import ArtistService from "../../services/ArtistService";
 import { AlbumType } from "../../types/Album";
+import ImageUploadService from "../../services/UploadImageService";
 
-const UpdateArtist = () => {
-  const { updateArtist } = useContext(ArtistContext) as ArtistContextType;
+interface UpdateArtistProps {
+  selectedArtist: ArtistType | null;
+  clearSelectedArtist: () => void;
+  onSave: (artist: ArtistType) => void;
+}
 
-  const [id, setId] = useState<string>("Id not set");
-  const [name, setName] = useState<string>("Name not set");
-  const [genre, setGenre] = useState<string>("Genre not set");
-  const [image, setImage] = useState<any>();
-  const [imageFileName, setFileName] = useState<string>("");
-  const [description, setDescription] = useState<string>("Description not set");
-  const [albums, setAlbums] = useState<AlbumType[]>([]);
+const UpdateArtist: FC<UpdateArtistProps> = ({
+  selectedArtist,
+  clearSelectedArtist,
+  onSave,
+}) => {
+  const [id, setId] = useState<string>(selectedArtist?.id?.toString() || "");
+  const [name, setName] = useState<string>(selectedArtist?.artistName || "");
+  const [genre, setGenre] = useState<string>(selectedArtist?.genre || "");
+  const [image, setImage] = useState<File | null>(null);
+  const [imageFileName, setFileName] = useState<string>(
+    selectedArtist?.image || ""
+  );
+  const [description, setDescription] = useState<string>(
+    selectedArtist?.description || ""
+  );
+  const [albums, setAlbums] = useState<AlbumType[]>(
+    selectedArtist?.albums || []
+  );
 
-  const updateArtistFields = async () => {
-    const artist = await ArtistService.getArtistById(parseInt(id));
-    setName(artist.artistName);
-    setGenre(artist.genre);
-    setFileName(artist.image);
-    setDescription(artist.description);
-    setAlbums(artist.albums);
-  };
+  useEffect(() => {
+    if (selectedArtist && selectedArtist.id !== undefined) {
+      setId(selectedArtist.id.toString());
+      setName(selectedArtist.artistName || "");
+      setGenre(selectedArtist.genre || "");
+      setFileName(selectedArtist.image || "");
+      setDescription(selectedArtist.description || "");
+      setAlbums(selectedArtist.albums || []);
+    }
+  }, [selectedArtist]);
 
   const imageHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
@@ -35,33 +48,27 @@ const UpdateArtist = () => {
     }
   };
 
-  const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+  const changeHandler = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.currentTarget;
     switch (name) {
-      case "id":
-        setId(value);
-        break;
       case "name":
         setName(value);
         break;
       case "genre":
         setGenre(value);
         break;
-      case "image":
-        setImage(value);
-        break;
       case "description":
+        setDescription(value);
         break;
-      case "albums":
-        break;
-
       default:
         break;
     }
   };
 
-  const alterArtist = () => {
-    const Artist: ArtistType = {
+  const alterArtist = async () => {
+    const updatedArtist: ArtistType = {
       id: parseInt(id),
       artistName: name,
       genre: genre,
@@ -70,20 +77,13 @@ const UpdateArtist = () => {
       albums: albums,
     };
     if (image != null) {
-      ImageUploadService.uploadImage(image);
-      updateArtist(Artist);
-      alert("Edited Artist successfully with image.");
-      window.location.reload();
-    } else {
-      updateArtist(Artist);
-      alert("Edited Artist successfully without image.");
-      window.location.reload();
+      await ImageUploadService.uploadImage(image);
     }
+    onSave(updatedArtist);
   };
 
   return (
     <section className="margin">
-      <h2>Update Artist</h2>
       <div className="row">
         <div className="col-lg-6 col-md-8 col-sm-10 col-12 mb-3">
           <div className="form-group">
@@ -91,19 +91,7 @@ const UpdateArtist = () => {
               Id
             </label>
             <div className="input-group">
-              <input
-                className="form-control"
-                name="id"
-                onChange={changeHandler}
-                type="number"
-                value={id}
-              />
-              <button
-                className="btn btn-primary ms-2"
-                onClick={updateArtistFields}
-              >
-                Get Artist
-              </button>
+              <input className="form-control" name="id" value={id} readOnly />
             </div>
           </div>
           <div className="form-group">
@@ -131,6 +119,17 @@ const UpdateArtist = () => {
             />
           </div>
           <div className="form-group">
+            <label htmlFor="description" className="form-label">
+              Description
+            </label>
+            <textarea
+              className="form-control"
+              name="description"
+              value={description}
+              onChange={changeHandler}
+            />
+          </div>
+          <div className="form-group">
             <label htmlFor="image" className="form-label">
               Image
             </label>
@@ -146,6 +145,12 @@ const UpdateArtist = () => {
             onClick={alterArtist}
           >
             Update
+          </button>
+          <button
+            className="btn btn-secondary col-lg-2 col-md-3 col-sm-4 col-6 mt-3 ms-2"
+            onClick={clearSelectedArtist}
+          >
+            Close
           </button>
         </div>
       </div>

@@ -1,12 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainPageHeader from "./components/shared/MainPageHeader";
-import {
-  AboutPage,
-  AddNewArtistPage,
-  DeleteArtistPage,
-  HomePage,
-  UpdateArtistPage,
-} from "./pages/Index";
+import { AboutPage, HomePage, ManageArtistPage } from "./pages/Index";
 import ArtistDetailPage from "./pages/artists/ArtistDetailPage";
 import { ArtistProvider } from "./contexts/ArtistContext";
 
@@ -20,20 +14,11 @@ function App() {
             <Routes>
               <Route path="/" element={<HomePage />}></Route>
               <Route path="about" element={<AboutPage />}></Route>
+              <Route path="artists/:id" element={<ArtistDetailPage />}></Route>
               <Route
-                path="add-new-artist"
-                element={<AddNewArtistPage />}
+                path="manage-artist"
+                element={<ManageArtistPage />}
               ></Route>
-              <Route
-                path="update-artist"
-                element={<UpdateArtistPage />}
-              ></Route>
-              <Route
-                path="delete-artist"
-                element={<DeleteArtistPage />}
-              ></Route>
-              <Route path="artists/:id" element={<ArtistDetailPage />}></Route>{" "}
-              {/* New route */}
             </Routes>
           </main>
         </ArtistProvider>

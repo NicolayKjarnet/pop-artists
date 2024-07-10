@@ -4,8 +4,18 @@ import ArtistImage from "../helpers/ArtistImage";
 import CRUDButton from "../helpers/CRUDButton";
 
 interface ArtistItemProps extends ArtistType {
-  buttonType: "seeMore" | "delete" | "update" | "none";
-  onClick?: (id: number, artistName: string) => void;
+  buttonType:
+    | "seeMore"
+    | "delete"
+    | "update"
+    | "add"
+    | "none"
+    | "updateAndDelete";
+  onClick?: (
+    id: number,
+    artistName: string,
+    type: "update" | "delete" | "seeMore"
+  ) => void;
   isDetailPage?: boolean;
 }
 
@@ -24,8 +34,15 @@ const ArtistItem: FC<ArtistItemProps> = ({
     return sentences.length > 2 ? sentences.slice(0, 2).join(". ") + "." : text;
   };
 
-  const handleClick = () => {
-    if (onClick) onClick(id as number, artistName);
+  const handleClick = (
+    type: "update" | "delete" | "seeMore" | "add" | "none"
+  ) => {
+    if (onClick)
+      onClick(
+        id as number,
+        artistName,
+        type as "update" | "delete" | "seeMore"
+      );
   };
 
   return (
@@ -43,11 +60,27 @@ const ArtistItem: FC<ArtistItemProps> = ({
             {isDetailPage ? description : getShortDescription(description)}
           </p>
           <div className="d-flex justify-content-between">
-            <CRUDButton
-              id={id as number}
-              buttonType={buttonType}
-              onClick={handleClick}
-            />
+            {buttonType === "updateAndDelete" && (
+              <>
+                <CRUDButton
+                  id={id as number}
+                  buttonType="update"
+                  onClick={() => handleClick("update")}
+                />
+                <CRUDButton
+                  id={id as number}
+                  buttonType="delete"
+                  onClick={() => handleClick("delete")}
+                />
+              </>
+            )}
+            {buttonType !== "updateAndDelete" && (
+              <CRUDButton
+                id={id as number}
+                buttonType={buttonType}
+                onClick={() => handleClick(buttonType)}
+              />
+            )}
           </div>
         </div>
       </article>

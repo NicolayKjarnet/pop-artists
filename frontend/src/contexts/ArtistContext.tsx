@@ -52,7 +52,10 @@ export const ArtistProvider: FC<Props> = ({ children }) => {
   };
 
   const updateArtist = async (artist: ArtistType) => {
-    setArtist([artist, ...artistArray]);
+    const updatedArtists = artistArray.map((a) =>
+      a.id === artist.id ? artist : a
+    );
+    setArtist(updatedArtists);
     await ArtistService.putArtist(artist);
   };
 

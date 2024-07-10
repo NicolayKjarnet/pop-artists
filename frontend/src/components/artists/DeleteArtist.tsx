@@ -43,7 +43,6 @@ const DeleteArtist = () => {
 
   return (
     <section className="margin">
-      <h2>Delete Artist</h2>
       <div className="align-items-end">
         <SearchForArtist updateContext={true} />
       </div>

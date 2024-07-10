@@ -40,18 +40,8 @@ const MainNavigation = () => {
               </Link>
             </li>
             <li className="nav-item">
-              <Link to="/add-new-artist" className="nav-link">
-                Add New Artist
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/update-artist" className="nav-link">
-                Update Artists
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/delete-artist" className="nav-link">
-                Delete Artists
+              <Link to="/manage-artist" className="nav-link">
+                Manage Artists
               </Link>
             </li>
           </ul>
