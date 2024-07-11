@@ -1,4 +1,4 @@
-import { useState, useContext, ChangeEvent } from "react";
+import { useState, useContext, ChangeEvent, useEffect } from "react";
 import { ArtistContext } from "../../contexts/ArtistContext";
 import { ArtistType } from "../../types/Artist";
 import { ArtistContextType } from "../../types/ArtistContext";
@@ -6,12 +6,14 @@ import ImageUploadService from "../../services/UploadImageService";
 import CustomTooltip from "../helpers/CustomTooltip";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import ArtistItem from "./ArtistItem";
+import ConfirmationMessage from "../helpers/ConfirmationMessage";
 
 const AddNewArtist = () => {
   const { addArtist } = useContext(ArtistContext) as ArtistContextType;
 
   const [image, setImage] = useState<File | null>(null);
-  const [imageFileName, setFileName] = useState<string>("placeholder.jpg");
+  const [imagePreviewUrl, setImagePreviewUrl] =
+    useState<string>("placeholder.jpg");
 
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [confirmationMessage, setConfirmationMessage] = useState("");
@@ -34,17 +36,34 @@ const AddNewArtist = () => {
     const { files } = e.target;
     if (files && files.length > 0) {
       const file = files[0];
+      console.log("Selected file:", file);
       if (file.size < 2_000_000) {
         setImage(file);
-        setFileName(file.name);
-        setNewArtist({ ...newArtist, image: file.name });
+        const imageUrl = URL.createObjectURL(file);
+        console.log("Generated image URL:", imageUrl);
+        setImagePreviewUrl(imageUrl);
+        setNewArtist({ ...newArtist, image: imageUrl });
       } else {
         alert("File size too big, cannot exceed 2MB.");
       }
     }
   };
 
+  useEffect(() => {
+    if (!image) {
+      setImagePreviewUrl("placeholder.jpg");
+      return;
+    }
+
+    const objectUrl = URL.createObjectURL(image);
+    setImagePreviewUrl(objectUrl);
+
+    // Cleanup the object URL when component unmounts or the image changes
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [image]);
+
   const addNewArtistHandler = async () => {
+    console.log("Adding new artist:", newArtist);
     if (newArtist != null && image != null) {
       try {
         await Promise.all([
@@ -57,20 +76,23 @@ const AddNewArtist = () => {
         setShowConfirmation(true);
         setTimeout(() => {
           setShowConfirmation(false);
+          setNewArtist({
+            id: 0,
+            artistName: "",
+            genre: "",
+            image: "placeholder.jpg",
+            description: "",
+            albums: [],
+          });
+          setImage(null);
+          setImagePreviewUrl("placeholder.jpg");
         }, 3000);
-        setNewArtist({
-          id: 0,
-          artistName: "",
-          genre: "",
-          image: "placeholder.jpg",
-          description: "",
-          albums: [],
-        });
-        setImage(null);
-        setFileName("placeholder.jpg");
-      } catch {
+      } catch (error) {
+        console.error("Error adding artist:", error);
         alert("Error adding artist.");
       }
+    } else {
+      console.warn("New artist or image is null");
     }
   };
 
@@ -148,26 +170,31 @@ const AddNewArtist = () => {
         <div className="col-lg-8 col-md-6 col-sm-12">
           <div className="artist-list-wrapper">
             <div className="artist-list-container">
-              <ArtistItem
-                key={`new-artist-preview`}
-                id={newArtist.id}
-                artistName={newArtist.artistName || "Artist Name"}
-                genre={newArtist.genre || "Genre"}
-                image={newArtist.image}
-                description={newArtist.description || "Description"}
-                albums={newArtist.albums}
-                buttonType="none"
-                onClick={() => {}}
-                isDetailPage={false}
-                isUpdatePage={false}
-              />
+              <div className="row">
+                <div className="col-12">
+                  <ArtistItem
+                    key={`new-artist-preview`}
+                    id={newArtist.id}
+                    artistName={newArtist.artistName || "Artist Name"}
+                    genre={newArtist.genre || "Genre"}
+                    image={imagePreviewUrl}
+                    description={newArtist.description || "Description"}
+                    albums={newArtist.albums}
+                    buttonType="none"
+                    onClick={() => {}}
+                    isDetailPage={false}
+                    isUpdatePage={false}
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      {showConfirmation && (
-        <div className="confirmation-message">{confirmationMessage}</div>
-      )}
+      <ConfirmationMessage
+        message={confirmationMessage}
+        show={showConfirmation}
+      />
     </section>
   );
 };

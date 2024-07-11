@@ -47,7 +47,6 @@ const ArtistDetailPage: FC = () => {
             />
             <p className="artist-description">{artist.description}</p>
           </div>
-          {/* <hr /> */}
           <div className="col-lg-8 album-container">
             <h3 className="album-name">Albums</h3>
             <div className="row">

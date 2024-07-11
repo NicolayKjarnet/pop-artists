@@ -17,7 +17,9 @@ const UniversalImage: FC<UniversalImageProps> = ({
   className = "card-img-top",
   imageType,
 }) => {
-  const imageUrl = `${baseURL}/images/${imageType}s/${fileName}`;
+  const imageUrl = fileName.startsWith("blob:")
+    ? fileName
+    : `${baseURL}/images/${imageType}s/${fileName}`;
 
   return <img className={className} src={imageUrl} alt={altTxt} />;
 };

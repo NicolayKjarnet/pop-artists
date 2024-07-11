@@ -9,6 +9,7 @@ import ArtistList from "./ArtistList";
 import SearchForArtist from "./SearchForArtist";
 import CustomTooltip from "../helpers/CustomTooltip";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import ConfirmationMessage from "../helpers/ConfirmationMessage";
 
 const UpdateArtist = () => {
   const { updateArtist, artistArray } = useContext(
@@ -235,9 +236,10 @@ const UpdateArtist = () => {
           </div>
         </div>
       </div>
-      {showConfirmation && (
-        <div className="confirmation-message">{confirmationMessage}</div>
-      )}
+      <ConfirmationMessage
+        message={confirmationMessage}
+        show={showConfirmation}
+      />
     </section>
   );
 };

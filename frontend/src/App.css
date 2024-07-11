@@ -398,11 +398,30 @@ ul {
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   z-index: 1;
-  transition: opacity 0.5s ease-in-out;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+  animation: fadeIn 0.5s forwards;
 }
 
-.confirmation-message.fade-out {
-  opacity: 0;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
 /* ---------------------- Update page ---------------------- */
@@ -415,19 +434,25 @@ ul {
   font-size: 1rem;
 }
 
-.fixed-form {
+.form-container {
+  position: -webkit-sticky; /* Safari */
   position: sticky;
-  top: 0;
-}
-
-.artist-list-wrapper {
-  max-height: 80vh;
+  top: 1rem;
+  max-height: 90vh;
   overflow-y: auto;
 }
 
-.artist-list-container {
+@media (max-width: 768px) {
+  .form-container {
+    position: static;
+    max-height: none;
+    overflow-y: visible;
+  }
+}
+
+.add-new-artist-list-container {
+  width: 1000px;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  min-height: 50vh;
 }

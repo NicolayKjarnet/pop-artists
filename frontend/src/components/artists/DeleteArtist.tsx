@@ -4,6 +4,7 @@ import { ArtistContextType } from "../../types/ArtistContext";
 import SearchForArtist from "./SearchForArtist";
 import ArtistList from "./ArtistList";
 import Modal from "react-modal";
+import ConfirmationMessage from "../helpers/ConfirmationMessage"; // Importer komponenten
 
 const DeleteArtist = () => {
   const { deleteArtist } = useContext(ArtistContext) as ArtistContextType;
@@ -100,9 +101,10 @@ const DeleteArtist = () => {
           </div>
         </div>
       </Modal>
-      {showConfirmation && (
-        <div className="confirmation-message">{confirmationMessage}</div>
-      )}
+      <ConfirmationMessage
+        message={confirmationMessage}
+        show={showConfirmation}
+      />
     </section>
   );
 };
