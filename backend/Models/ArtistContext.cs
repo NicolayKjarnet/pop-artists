@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 public class ArtistContext : DbContext
 {
-    public ArtistContext(DbContextOptions<ArtistContext> options):base(options){}
+    public ArtistContext(DbContextOptions<ArtistContext> options) : base(options) { }
 
-    public DbSet<PopArtistApi.Models.Artist> Artists {get; set;} = null!;
+    public DbSet<PopArtistApi.Models.Artist> Artists { get; set; } = null!;
     public DbSet<PopArtistApi.Models.Album> Albums { get; set; }
     public DbSet<PopArtistApi.Models.Song> Songs { get; set; }
 

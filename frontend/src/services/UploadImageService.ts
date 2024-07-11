@@ -3,7 +3,7 @@ import axios from "axios";
 const ImageUploadService = (() => {
   const baseURL = process.env.REACT_APP_API_URL;
 
-  const imageUploadEndpoint = `${baseURL}/UploadImage`;
+  const imageUploadEndpoint = `${baseURL}UploadImage`;
 
   const uploadImage = async (image: File) => {
     const formData = new FormData();

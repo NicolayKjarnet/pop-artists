@@ -16,14 +16,11 @@ const HomePage = () => {
     fetchArtists();
   }, [setArtistArray]);
 
-  const handleSeeMore = (id: number) => {
-    console.log(`See more button clicked for artist with id ${id}`);
-  };
-
   return (
     <div className="container mt-4">
+      <h2>All artists</h2>
       <SearchForArtist updateContext={true} />
-      <ArtistList buttonType="seeMore" onClick={handleSeeMore} />
+      <ArtistList buttonType="seeMore" />
     </div>
   );
 };

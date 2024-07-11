@@ -59,6 +59,7 @@ const DeleteArtist = () => {
         contentLabel="Confirm Deletion"
         ariaHideApp={false}
         className="modal-dialog-centered"
+        overlayClassName="modal-overlay"
       >
         <div className="modal-dialog bg-dark p-4" role="document">
           <div className="modal-content">

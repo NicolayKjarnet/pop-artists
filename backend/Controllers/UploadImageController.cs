@@ -1,8 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using System.IO;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 
 namespace PopArtistApi.Controllers
 {

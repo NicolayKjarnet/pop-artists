@@ -1,4 +1,6 @@
-/* GENERAL */
+/* ----------------------------------------------------- */
+/* ---------------------- GENERAL ---------------------- */
+/* ----------------------------------------------------- */
 
 @import url("https://fonts.cdnfonts.com/css/capuche-trial");
 @import url("https://fonts.cdnfonts.com/css/poppins");
@@ -56,8 +58,9 @@ p {
 ul {
   list-style-type: none;
 }
-
-/*! ---------------------- HEADER ---------------------- */
+/* ---------------------------------------------------- */
+/* ---------------------- HEADER ---------------------- */
+/* ---------------------------------------------------- */
 
 .header {
   background-color: #343a40;
@@ -72,9 +75,11 @@ ul {
   margin-top: 1rem;
 }
 
-/*! ---------------------- MAIN ---------------------- */
+/* -------------------------------------------------- */
+/* ---------------------- MAIN ---------------------- */
+/* -------------------------------------------------- */
 
-/* CARD */
+/* ---------------------- Card ---------------------- */
 
 .card-img-top {
   object-fit: cover;
@@ -99,7 +104,71 @@ ul {
   color: var(--clr-txt);
 }
 
-/* CARD HOVER STATES */
+.container {
+  max-width: 1200px;
+}
+
+.img-fluid {
+  max-width: 100%;
+  height: auto;
+}
+
+.card-body {
+  padding: 1rem;
+}
+
+.card-title {
+  margin-bottom: 1rem;
+}
+
+.list-group-numbered {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+}
+
+.list-group-item {
+  border: none;
+  padding-left: 0;
+}
+
+.list-group-item::marker {
+  color: var(--secondary-color);
+  font-size: 1.2rem;
+}
+
+.container {
+  max-width: 1200px;
+}
+
+.img-fluid {
+  max-width: 100%;
+  height: auto;
+}
+
+.card-body {
+  padding: 1rem;
+}
+
+.card-title {
+  margin-bottom: 1rem;
+}
+
+.list-group-numbered {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+}
+
+.list-group-item {
+  border: none;
+  padding-left: 0;
+}
+
+.list-group-item::marker {
+  color: var(--secondary-color);
+  font-size: 1.2rem;
+}
+
+/* ---------------------- Card hover / selected card ---------------------- */
 
 .card:hover {
   cursor: pointer;
@@ -114,85 +183,16 @@ ul {
   opacity: 1;
 }
 
-.container {
-  max-width: 1200px;
+.selected .card-body .card-title {
+  color: var(--clr-title);
 }
 
-.img-fluid {
-  max-width: 100%;
-  height: auto;
+.selected .card .card-img-top {
+  transform: scale(1.02);
+  opacity: 1;
 }
 
-.album-img {
-  width: 100%;
-  height: 0;
-  padding-top: 100%;
-  object-fit: cover;
-  border-radius: 5px 5px 0 0;
-}
-
-.card-body {
-  padding: 1rem;
-}
-
-.card-title {
-  margin-bottom: 1rem;
-}
-
-.list-group-numbered {
-  list-style-type: decimal;
-  padding-left: 1.5rem;
-}
-
-.list-group-item {
-  border: none;
-  padding-left: 0;
-}
-
-.list-group-item::marker {
-  color: var(--secondary-color);
-  font-size: 1.2rem;
-}
-
-.container {
-  max-width: 1200px;
-}
-
-.img-fluid {
-  max-width: 100%;
-  height: auto;
-}
-
-.album-img {
-  width: 100%;
-  height: 0;
-  padding-top: 100%;
-  object-fit: cover;
-  border-radius: 5px 5px 0 0;
-}
-
-.card-body {
-  padding: 1rem;
-}
-
-.card-title {
-  margin-bottom: 1rem;
-}
-
-.list-group-numbered {
-  list-style-type: decimal;
-  padding-left: 1.5rem;
-}
-
-.list-group-item {
-  border: none;
-  padding-left: 0;
-}
-
-.list-group-item::marker {
-  color: var(--secondary-color);
-  font-size: 1.2rem;
-}
+/* ---------------------- Buttons ---------------------- */
 
 .btn-main {
   text-decoration: none;
@@ -219,6 +219,7 @@ ul {
   padding: 0.5rem 1rem;
   font-size: 1rem;
   transition: 0.2s ease-in-out;
+  margin-bottom: 1rem;
 }
 
 .btn-back:hover {
@@ -227,6 +228,8 @@ ul {
   color: var(--clr-txt);
 }
 
+/* ---------------------- ArtistDetailPage ---------------------- */
+
 .container.artist-detail-container {
   background-color: #f8f9fa;
   padding: 2rem;
@@ -234,18 +237,9 @@ ul {
   box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
-/* ---------------------- ArtistDetailPage ---------------------- */
-
 .artist-detail-container {
   padding: 20px;
   border-radius: 10px;
-}
-
-.btn-back {
-  border: 1px solid var(--clr-title);
-  color: var(--clr-txt);
-  padding: 10px 20px;
-  cursor: pointer;
 }
 
 .artist-detail-grid {
@@ -254,16 +248,27 @@ ul {
   gap: 20px;
 }
 
-.artist-info {
-  flex: 1;
-  min-width: 300px;
-}
-
 .artist-name {
-  margin-top: 10px;
+  margin-top: 1rem;
   font-size: 2rem;
   font-family: "Capuche Trial", sans-serif;
   color: var(--clr-title);
+}
+
+.album-img {
+  width: 100%;
+  height: 0;
+  padding-top: 100%;
+  object-fit: cover;
+  border-radius: 5px 5px 0 0;
+}
+
+.album-name {
+  font-size: 1.5rem;
+  font-family: "Capuche Trial", sans-serif;
+  color: var(--clr-title);
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 .artist-description {
@@ -297,7 +302,6 @@ ul {
 }
 
 #list-group-item:hover {
-  /* border: 2px solid #fc8d1f; */
   background-color: var(--clr-title);
 }
 
@@ -316,28 +320,36 @@ ul {
 
 /* ---------------------- Modal ---------------------- */
 
-.modal-dialog-centered {
-  max-width: 800px;
-  margin: 0 auto;
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  z-index: 9999;
+}
+
+.modal-dialog-centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .modal-dialog {
+  width: 100%;
   max-width: 800px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  margin: 0 20px;
   border-radius: 0.5rem;
   color: var(--clr-txt);
+  background: var(--clr-bg);
 }
 
 .modal-content {
-  max-width: 100%;
-  width: auto;
+  width: 100%;
   position: relative;
 }
 
@@ -391,4 +403,31 @@ ul {
 
 .confirmation-message.fade-out {
   opacity: 0;
+}
+
+/* ---------------------- Update page ---------------------- */
+
+.tooltip-icon {
+  cursor: pointer;
+  color: var(--clr-bg-dark);
+  height: 1.2rem;
+  margin-bottom: 0.7rem;
+  font-size: 1rem;
+}
+
+.fixed-form {
+  position: sticky;
+  top: 0;
+}
+
+.artist-list-wrapper {
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.artist-list-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
 }
