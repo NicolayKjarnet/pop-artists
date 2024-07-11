@@ -5,11 +5,11 @@ import SongService from "../services/SongService";
 
 export const SongContext = createContext<SongContextType | null>(null);
 
-interface Props {
+type SongProviderProps = {
   children: ReactNode;
-}
+};
 
-export const SongProvider: FC<Props> = ({ children }) => {
+export const SongProvider: FC<SongProviderProps> = ({ children }) => {
   const [songArray, setSong] = useState<SongType[]>([]);
 
   useEffect(() => {

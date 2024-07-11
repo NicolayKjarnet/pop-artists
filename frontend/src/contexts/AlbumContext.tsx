@@ -5,11 +5,11 @@ import AlbumService from "../services/AlbumService";
 
 export const AlbumContext = createContext<AlbumContextType | null>(null);
 
-interface Props {
+type AlbumProps = {
   children: ReactNode;
-}
+};
 
-export const AlbumProvider: FC<Props> = ({ children }) => {
+export const AlbumProvider: FC<AlbumProps> = ({ children }) => {
   const [albumArray, setAlbum] = useState<AlbumType[]>([]);
 
   useEffect(() => {

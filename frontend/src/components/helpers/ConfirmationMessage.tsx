@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 
-interface ConfirmationMessageProps {
+type ConfirmationMessageProps = {
   message: string;
   show: boolean;
   duration?: number;
-}
+};
 
 const ConfirmationMessage: React.FC<ConfirmationMessageProps> = ({
   message,

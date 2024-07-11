@@ -5,11 +5,11 @@ import ArtistService from "../services/ArtistService";
 
 export const ArtistContext = createContext<ArtistContextType | null>(null);
 
-interface Props {
+type ArtistProviderProps = {
   children: ReactNode;
-}
+};
 
-export const ArtistProvider: FC<Props> = ({ children }) => {
+export const ArtistProvider: FC<ArtistProviderProps> = ({ children }) => {
   const [artistArray, setArtist] = useState<ArtistType[]>([]);
 
   useEffect(() => {

@@ -3,13 +3,13 @@ import { ArtistType } from "../../types/Artist";
 import ArtistImage from "../helpers/ArtistImage";
 import CRUDButton from "../helpers/CRUDButton";
 
-interface ArtistItemProps extends ArtistType {
+type ArtistItemProps = ArtistType & {
   buttonType: "seeMore" | "delete" | "update" | "none";
   onClick?: (id: number, artistName: string) => void;
   isDetailPage?: boolean;
   isUpdatePage?: boolean;
   isSelected?: boolean;
-}
+};
 
 const ArtistItem: FC<ArtistItemProps & React.RefAttributes<HTMLDivElement>> =
   forwardRef<HTMLDivElement, ArtistItemProps>(

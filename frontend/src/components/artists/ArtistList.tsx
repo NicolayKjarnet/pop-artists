@@ -1,72 +1,16 @@
-// import { useContext, FC } from "react";
-// import { ArtistContext } from "../../contexts/ArtistContext";
-// import { ArtistContextType } from "../../types/ArtistContext";
-// import ArtistItem from "./ArtistItem";
-// import { ArtistType } from "../../types/Artist";
-
-// interface ArtistListProps {
-//   buttonType: "seeMore" | "delete" | "update" | "none";
-//   onClick?: (id: number, artistName: string) => void;
-//   artists?: ArtistType[];
-//   isUpdatePage?: boolean;
-//   selectedArtistId?: number | null;
-// }
-
-// const ArtistList: FC<ArtistListProps> = ({
-//   buttonType,
-//   onClick,
-//   artists,
-//   isUpdatePage = false,
-//   selectedArtistId,
-// }) => {
-//   const { artistArray } = useContext(ArtistContext) as ArtistContextType;
-
-//   const getArtistList = () => {
-//     const list = artists || artistArray;
-//     if (list && list.length > 0) {
-//       return list.map((artist, i) => (
-//         <ArtistItem
-//           key={`artist-${i}`}
-//           id={artist.id}
-//           artistName={artist.artistName}
-//           genre={artist.genre}
-//           image={artist.image}
-//           description={artist.description}
-//           albums={artist.albums}
-//           buttonType={buttonType}
-//           onClick={onClick}
-//           isDetailPage={false}
-//           isUpdatePage={isUpdatePage}
-//           isSelected={artist.id === selectedArtistId}
-//         />
-//       ));
-//     } else {
-//       return <p>No artists found.</p>;
-//     }
-//   };
-
-//   return (
-//     <section>
-//       <div className="artist-container row">{getArtistList()}</div>
-//     </section>
-//   );
-// };
-
-// export default ArtistList;
-
 import React, { useContext, FC, useEffect, useRef } from "react";
 import { ArtistContext } from "../../contexts/ArtistContext";
 import { ArtistContextType } from "../../types/ArtistContext";
 import ArtistItem from "./ArtistItem";
 import { ArtistType } from "../../types/Artist";
 
-interface ArtistListProps {
+type ArtistListProps = {
   buttonType: "seeMore" | "delete" | "update" | "none";
   onClick?: (id: number, artistName: string) => void;
   artists?: ArtistType[];
   isUpdatePage?: boolean;
   selectedArtistId?: number | null;
-}
+};
 
 const ArtistList: FC<ArtistListProps> = ({
   buttonType,
