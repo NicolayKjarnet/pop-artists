@@ -4,7 +4,6 @@ import { ArtistContext } from "../../contexts/ArtistContext";
 import { ArtistContextType } from "../../types/ArtistContext";
 import { AlbumType } from "../../types/Album";
 import UniversalImage from "../../components/helpers/ArtistImage";
-import ArtistItem from "../../components/artists/ArtistItem";
 
 const ArtistDetailPage: FC = () => {
   const { id } = useParams<{ id: string }>();

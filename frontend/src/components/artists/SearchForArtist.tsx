@@ -1,34 +1,49 @@
-import { useState, useRef, useEffect, useContext, FC } from "react";
+import React, { useState, useRef, useEffect, useContext, FC } from "react";
 import { ArtistType } from "../../types/Artist";
 import ArtistService from "../../services/ArtistService";
 import { ArtistContext } from "../../contexts/ArtistContext";
 import { ArtistContextType } from "../../types/ArtistContext";
 import debounce from "lodash/debounce";
-import ArtistList from "./ArtistList";
+import SearchInput from "../helpers/inputs/SearchInput";
+import axios from "axios";
 
 type SearchForArtistProps = {
   updateContext: boolean;
+  onArtistSelect?: (artistId: number) => void;
 };
 
 const SearchForArtist: FC<SearchForArtistProps> = ({ updateContext }) => {
   const [searchValue, setSearchValue] = useState<string>("");
+  const [error, setError] = useState<string | null>(null);
   const { setArtistArray, artistArray } = useContext(
     ArtistContext
   ) as ArtistContextType;
 
   const debouncedSearch = useRef(
     debounce(async (search: string) => {
-      if (search.trim() !== "") {
-        const results: ArtistType[] = await ArtistService.getArtistByName(
-          search
-        );
-        if (updateContext) {
-          setArtistArray(results);
+      try {
+        if (search.trim() !== "") {
+          const results: ArtistType[] = await ArtistService.getArtistByName(
+            search
+          );
+          if (updateContext) {
+            setArtistArray(results);
+          }
+        } else {
+          const allArtists: ArtistType[] = await ArtistService.getAllArtists();
+          if (updateContext) {
+            setArtistArray(allArtists);
+          }
         }
-      } else {
-        const allArtists: ArtistType[] = await ArtistService.getAllArtists();
-        if (updateContext) {
-          setArtistArray(allArtists);
+        setError(null);
+      } catch (err) {
+        if (axios.isAxiosError(err) && err.response?.status === 404) {
+          setError(`No artists found.`);
+          if (updateContext) {
+            setArtistArray([]);
+          }
+        } else {
+          setError("An error occurred while searching for artists.");
         }
       }
     }, 300)
@@ -53,21 +68,12 @@ const SearchForArtist: FC<SearchForArtistProps> = ({ updateContext }) => {
 
   return (
     <section className="margin">
-      <div className="form-group">
-        <input
-          className="form-control"
-          value={searchValue}
-          onChange={(e) => handleNameChange(e)}
-          placeholder="Sarch for artist by name..."
-        />
-      </div>
-      {!updateContext && (
-        <ArtistList
-          onClick={() => handleNameChange}
-          buttonType="seeMore"
-          artists={artistArray}
-        />
-      )}
+      <SearchInput
+        value={searchValue}
+        onChange={handleNameChange}
+        placeholder="Search for artist by name..."
+      />
+      {error && <div className="alert alert-danger mt-3">{error}</div>}
     </section>
   );
 };

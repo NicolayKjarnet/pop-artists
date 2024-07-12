@@ -4,7 +4,9 @@ import { ArtistContextType } from "../../types/ArtistContext";
 import SearchForArtist from "./SearchForArtist";
 import ArtistList from "./ArtistList";
 import Modal from "react-modal";
-import ConfirmationMessage from "../helpers/ConfirmationMessage"; // Importer komponenten
+import ConfirmationMessage from "../helpers/ConfirmationMessage";
+import CustomTooltip from "../helpers/CustomTooltip";
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 
 const DeleteArtist = () => {
   const { deleteArtist } = useContext(ArtistContext) as ArtistContextType;
@@ -44,7 +46,14 @@ const DeleteArtist = () => {
 
   return (
     <section className="margin">
-      <h2>Delete Artist</h2>
+      <h2>
+        Delete Artist
+        <CustomTooltip
+          id="add-tooltip"
+          icon={faInfoCircle}
+          tooltipContent="Click on an artist to delete them."
+        />
+      </h2>
       <div className="align-items-end">
         <SearchForArtist updateContext={true} />
       </div>
