@@ -10,7 +10,10 @@ const AboutPage = () => {
       </p>
       <p>
         See{" "}
-        <a rel="stylesheet" href="http://127.0.0.1:5500/wwwroot/index.html">
+        <a
+          rel="stylesheet"
+          href="http://127.0.0.1:5500/backend/wwwroot/index.html"
+        >
           Docs
         </a>{" "}
         for more info on how to use the API.

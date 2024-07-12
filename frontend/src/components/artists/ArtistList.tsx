@@ -26,7 +26,7 @@ const ArtistList: FC<ArtistListProps> = ({
   useEffect(() => {
     if (selectedArtistId && artistRefs.current.has(selectedArtistId)) {
       const element = artistRefs.current.get(selectedArtistId);
-      const offset = -32; // Equals to 2rem to align with the fixed input form
+      const offset = -32; // Equals 2rem to align with the fixed input form
       const elementPosition =
         element!.getBoundingClientRect().top + window.pageYOffset;
       const offsetPosition = elementPosition + offset;
@@ -58,8 +58,6 @@ const ArtistList: FC<ArtistListProps> = ({
           ref={(el) => artistRefs.current.set(artist.id as number, el)}
         />
       ));
-    } else {
-      return <p>No artists found.</p>;
     }
   };
 

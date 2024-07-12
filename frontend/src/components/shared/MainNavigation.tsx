@@ -28,7 +28,7 @@ const MainNavigation = () => {
             </li>
             <li className="nav-item">
               <Link
-                to="http://127.0.0.1:5500/wwwroot/index.html"
+                to="http://127.0.0.1:5500/backend/wwwroot/index.html"
                 className="nav-link"
               >
                 Docs
