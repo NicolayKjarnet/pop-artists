@@ -24,11 +24,12 @@ document.addEventListener("DOMContentLoaded", () => {
       updateElements(".swagger-url", data.swaggerUrl);
 
       // Update specific endpoint URLs
-      updateElements(".artist-url", data.apiUrl + "/Artist");
+      updateElements(".artist-url", data.apiUrl + "Artist");
       updateElements(
         ".search-by-name-url",
-        data.apiUrl + "/Artist/SearchByName"
+        data.apiUrl + "Artist/SearchByName?name=ariana"
       );
+      updateElements(".search-by-id-url", data.apiUrl + "Artist/2");
     })
     .catch((error) => {
       console.error(

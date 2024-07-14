@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace PopArtistApi.Migrations
 {
     [DbContext(typeof(ArtistContext))]
-    [Migration("20240710160439_InitialCreate")]
+    [Migration("20240714111335_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

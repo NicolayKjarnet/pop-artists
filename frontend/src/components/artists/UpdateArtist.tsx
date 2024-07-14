@@ -60,16 +60,27 @@ const UpdateArtist = () => {
     setArtist(updatedArtist);
   };
 
+  const isFile = (value: any): value is File => {
+    return value instanceof File;
+  };
+
   const alterArtist = async (updatedArtist: ArtistType) => {
     try {
-      if (typeof updatedArtist.image === "string") {
-        await ImageUploadService.uploadImage(
-          new File([updatedArtist.image], updatedArtist.image)
-        );
+      let imageFileName = updatedArtist.image;
+
+      if (isFile(updatedArtist.image)) {
+        await ImageUploadService.uploadImage(updatedArtist.image);
+        imageFileName = updatedArtist.image.name;
       }
-      await updateArtist(updatedArtist);
+
+      const artistToUpdate = {
+        ...updatedArtist,
+        image: imageFileName,
+      };
+
+      await updateArtist(artistToUpdate);
       setConfirmationMessage(
-        `${updatedArtist.artistName} has been successfully updated.`
+        `${artistToUpdate.artistName} has been successfully updated.`
       );
       setShowConfirmation(true);
       setTimeout(() => {

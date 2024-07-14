@@ -40,9 +40,7 @@ const ArtistService = (() => {
 
   const deleteArtist = async (id: number) => {
     try {
-      console.log("Sending delete request for artist ID:", id);
       const result = await axios.delete(`${artistEndpoints.artists}/${id}`);
-      console.log("Delete request successful for artist ID:", id);
       return result;
     } catch (error) {
       console.error(
