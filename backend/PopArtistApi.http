@@ -1,0 +1,6 @@
+@PopArtistApi_HostAddress = http://localhost:5170
+
+GET {{PopArtistApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
